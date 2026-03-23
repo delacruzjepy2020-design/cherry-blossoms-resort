@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌸 Cherry Blossom's Resort</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">🌸 Cherry Blossom's</div>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#rooms">Rooms</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="hero">
+      <h1>Relax. Recharge. Repeat.</h1>
+      <p>7 Standard Rooms • Pool Access • Cherry Blossom Views</p>
+      <a href="#booking" class="btn">Book Now</a>
+    </div>
+  </header>
+
+  <section id="rooms" class="section">
+    <h2>Our Rooms</h2>
+    <div class="rooms-grid">
+      <div class="room-card">
+        <img src="https://via.placeholder.com/300x200/FFB6C1/FFFFFF?text=Standard+Room" alt="Standard Room">
+        <h3>Standard Room</h3>
+        <p>Comfortable, cozy, with pool access.</p>
+        <p><strong>₱2,500/night</strong></p>
+        <button onclick="document.getElementById('booking').scrollIntoView({behavior: 'smooth'})">Book Now</button>
+      </div>
+      <!-- Repite ang card para sa 7 rooms -->
+      <div class="room-card">
+        <img src="https://via.placeholder.com/300x200/FFB6C1/FFFFFF?text=Standard+Room" alt="Standard Room">
+        <h3>Standard Room</h3>
+        <p>Comfortable, cozy, with pool access.</p>
+        <p><strong>₱2,500/night</strong></p>
+        <button onclick="document.getElementById('booking').scrollIntoView({behavior: 'smooth'})">Book Now</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="section gallery">
+    <h2>Gallery</h2>
+    <div class="gallery-grid">
+      <img src="https://via.placeholder.com/300x200/FFB6C1/FFFFFF?text=Room+View" alt="Room" onclick="openLightbox(this)">
+      <img src="https://via.placeholder.com/300x200/FFB6C1/FFFFFF?text=Pool+Area" alt="Pool" onclick="openLightbox(this)">
+      <img src="https://via.placeholder.com/300x200/FFB6C1/FFFFFF?text=Cherry+Blossoms" alt="Blossoms" onclick="openLightbox(this)">
+      <img src="https://via.placeholder.com/300x200/FFB6C1/FFFFFF?text=Sunset" alt="Sunset" onclick="openLightbox(this)">
+    </div>
+  </section>
+
+  <section id="booking" class="section booking">
+    <h2>Book Your Stay</h2>
+    <form action="https://formspree.io/f/your-form-id" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="tel" name="phone" placeholder="Phone Number" required>
+      <input type="date" name="checkin" placeholder="Check-in Date" required>
+      <input type="date" name="checkout" placeholder="Check-out Date" required>
+      <select name="room" required>
+        <option value="">Select Room</option>
+        <option value="Standard Room">Standard Room (₱2,500/night)</option>
+      </select>
+      <textarea name="message" placeholder="Special Requests"></textarea>
+      <button type="submit">Submit Booking</button>
+    </form>
+  </section>
+
+  <section id="contact" class="section contact">
+    <h2>Contact Us</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p>📞 +63 912 345 6789</p>
+        <p>✉️ info@cherryblossomsresort.com</p>
+        <p>📍 123 Cherry Lane, May City</p>
+      </div>
+      <div id="map" style="height: 300px; width: 100%;"></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Cherry Blossom's Resort. All rights reserved.</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox">
+    <span class="close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="Enlarged Image">
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
