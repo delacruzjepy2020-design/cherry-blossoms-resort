@@ -1,101 +1,489 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🌸 Cherry Blossom's Resort</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cherry Blossom's Resort</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            color: #333;
+        }
+
+        /* NAVIGATION */
+        nav {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #d4527a;
+        }
+
+        .logo span {
+            font-size: 13px;
+            display: block;
+            color: #888;
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #555;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #d4527a;
+        }
+
+        /* HERO */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #f9c6d0 0%, #fde8ec 40%, #ffc2d4 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🌸';
+            font-size: 300px;
+            position: absolute;
+            opacity: 0.08;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .hero-content h1 {
+            font-size: 60px;
+            color: #c0395f;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            color: #888;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        .btn {
+            background-color: #d4527a;
+            color: white;
+            padding: 14px 35px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.2s;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #b03060;
+            transform: scale(1.05);
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 80px 60px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            color: #d4527a;
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #999;
+            margin-bottom: 50px;
+            font-size: 15px;
+            letter-spacing: 1px;
+        }
+
+        /* ABOUT */
+        .about {
+            background-color: #fff9fa;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text p {
+            font-size: 16px;
+            line-height: 1.9;
+            color: #666;
+        }
+
+        .about-emoji {
+            font-size: 120px;
+            text-align: center;
+            flex: 0.5;
+        }
+
+        /* AMENITIES */
+        .amenities {
+            background-color: #fff;
+        }
+
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .amenity-card {
+            background: linear-gradient(135deg, #fde8ec, #fff0f3);
+            border-radius: 15px;
+            padding: 35px 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(212, 82, 122, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .amenity-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .amenity-card .icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .amenity-card h3 {
+            font-size: 20px;
+            color: #d4527a;
+            margin-bottom: 10px;
+        }
+
+        .amenity-card p {
+            color: #888;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* ROOMS */
+        .rooms {
+            background-color: #fff9fa;
+        }
+
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .room-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+
+        .room-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .room-img {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            background: linear-gradient(135deg, #ffc2d4, #fde8ec);
+        }
+
+        .room-info {
+            padding: 20px;
+        }
+
+        .room-info h3 {
+            color: #d4527a;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .room-info p {
+            color: #999;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .room-info .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #c0395f;
+        }
+
+        .room-info .price span {
+            font-size: 13px;
+            color: #aaa;
+            font-weight: normal;
+        }
+
+        /* GALLERY */
+        .gallery {
+            background: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            height: 200px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            background: linear-gradient(135deg, #fde8ec, #ffc2d4);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.04);
+        }
+
+        /* CONTACT */
+        .contact {
+            background: linear-gradient(135deg, #fde8ec, #ffc2d4);
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(212, 82, 122, 0.15);
+        }
+
+        .contact-container input,
+        .contact-container textarea,
+        .contact-container select {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 18px;
+            border: 1px solid #f0c0cc;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .contact-container input:focus,
+        .contact-container textarea:focus,
+        .contact-container select:focus {
+            border-color: #d4527a;
+        }
+
+        .contact-container textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .contact-container button {
+            width: 100%;
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: #2d1a20;
+            color: #ccc;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        footer .footer-logo {
+            font-size: 26px;
+            color: #f9a8c0;
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        footer .socials {
+            font-size: 28px;
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        footer .copyright {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
 </head>
 <body>
-  <header>
+
+    <!-- NAVIGATION -->
     <nav>
-      <div class="logo">🌸 Cherry Blossom's in</div>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#rooms">Rooms</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+        <div class="logo">
+            🌸 Cherry Blossom's
+            <span>RESORT & LEISURE</span>
+        </div>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#amenities">Amenities</a></li>
+            <li><a href="#rooms">Rooms</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Book Now</a></li>
+        </ul>
     </nav>
-    <div class="hero">
-      <h1>Relax. Recharge. Repeat.</h1>
-      <p>7 Standard Rooms • Pool Access • Cherry Blossom Views</p>
-      <a href="#booking" class="btn">Book Now</a>
-    </div>
-  </header>
 
-  <section id="rooms" class="section">
-    <h2>Our Rooms</h2>
-    <div class="rooms-grid">
-      <div class="room-card">
-        <img src="https://via.placeholder.com/300x200/FFB6C1/FFFFFF?text=Standard+Room" alt="Standard Room">
-        <h3>Standard Room</h3>
-        <p>Comfortable, cozy, with pool access.</p>
-        <p><strong>₱1000/night</strong></p>
-        <button onclick="document.getElementById('booking').scrollIntoView({behavior: 'smooth'})">Book Now</button>
-      </div>
-      <!-- Repite ang card para sa 7 rooms -->
-      <div class="room-card">
-        <img src="https://via.placeholder.com/300x200/FFB6C1/FFFFFF?text=Standard+Room" alt="Standard Room">
-        <h3>Standard Room</h3>
-        <p>Comfortable, cozy, with pool access.</p>
-        <p><strong>₱1000/night</strong></p>
-        <button onclick="document.getElementById('booking').scrollIntoView({behavior: 'smooth'})">Book Now</button>
-      </div>
-    </div>
-  </section>
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <p>✨ WELCOME TO</p>
+            <h1>🌸 Cherry Blossom's Resort</h1>
+            <p>Where Nature Meets Luxury & Comfort</p>
+            <a href="#contact" class="btn">Book Your Stay</a>
+        </div>
+    </section>
 
-  <section id="gallery" class="section gallery">
-    <h2>Gallery</h2>
-    <div class="gallery-grid">
-      <img src="https://via.placeholder.com/300x200/FFB6C1/FFFFFF?text=Room+View" alt="Room" onclick="openLightbox(this)">
-      <img src="https://instasize.com/p/cb72f2ff33f6085d69c9a2d7528d250a95081f7e0105ecad7a278c32c375e8c1/300x200/FFB6C1/FFFFFF?text=Pool+Area" alt="Pool" onclick="openLightbox(this)">
-      <img src="https://via.placeholder.com/300x200/FFB6C1/FFFFFF?text=Cherry+Blossoms" alt="Blossoms" onclick="openLightbox(this)">
-      <img src="https://via.placeholder.com/300x200/FFB6C1/FFFFFF?text=Sunset" alt="Sunset" onclick="openLightbox(this)">
-    </div>
-  </section>
+    <!-- ABOUT -->
+    <section class="about" id="about">
+        <h2 class="section-title">About Our Resort</h2>
+        <p class="section-subtitle">A PEACEFUL ESCAPE LIKE NO OTHER</p>
+        <div class="about-content">
+            <div class="about-emoji">🌸🏡</div>
+            <div class="about-text">
+                <p>
+                    Nestled in a breathtaking natural landscape, <strong>Cherry Blossom's Resort</strong> 
+                    offers an unforgettable retreat for families, couples, and groups. 
+                    With <strong>7 cozy and elegantly designed rooms</strong>, we provide the perfect 
+                    blend of comfort, nature, and relaxation.
+                </p>
+                <br>
+                <p>
+                    Wake up to stunning views, take a refreshing dip in our sparkling pool, 
+                    challenge your friends to a game on our basketball court, and end your day 
+                    surrounded by the beauty of cherry blossoms. Your dream getaway starts here. 🌺
+                </p>
+            </div>
+        </div>
+    </section>
 
-  <section id="booking" class="section booking">
-    <h2>Book Your Stay</h2>
-    <form action="https://formspree.io/f/your-form-id" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <input type="tel" name="phone" placeholder="Phone Number" required>
-      <input type="date" name="checkin" placeholder="Check-in Date" required>
-      <input type="date" name="checkout" placeholder="Check-out Date" required>
-      <select name="room" required>
-        <option value="">Select Room</option>
-        <option value="Standard Room">Standard Room (₱1000/night)</option>
-      </select>
-      <textarea name="message" placeholder="Special Requests"></textarea>
-      <button type="submit">Submit Booking</button>
-    </form>
-  </section>
+    <!-- AMENITIES -->
+    <section class="amenities" id="amenities">
+        <h2 class="section-title">Our Amenities</h2>
+        <p class="section-subtitle">EVERYTHING YOU NEED FOR A PERFECT STAY</p>
+        <div class="amenities-grid">
+            <div class="amenity-card">
+                <div class="icon">🏊</div>
+                <h3>Swimming Pool</h3>
+                <p>Dive into our crystal-clear pool surrounded by lush greenery and beautiful cherry blossom trees.</p>
+            </div>
+            <div class="amenity-card">
+                <div class="icon">🏀</div>
+                <h3>Basketball Court</h3>
+                <p>Enjoy a friendly game on our full-size basketball court, perfect for groups and sports enthusiasts.</p>
+            </div>
+            <div class="amenity-card">
+                <div class="icon">🌄</div>
+                <h3>Scenic Views</h3>
+                <p>Wake up to stunning panoramic views of nature that will take your breath away every morning.</p>
+            </div>
+            <div class="amenity-card">
+                <div class="icon">🍽️</div>
+                <h3>Dining Area</h3>
+                <p>Enjoy delicious meals at our cozy dining area with a menu inspired by local and international cuisine.</p>
+            </div>
+            <div class="amenity-card">
+                <div class="icon">🌿</div>
+                <h3>Garden & Nature Walk</h3>
+                <p>Stroll through our beautifully maintained garden filled with cherry blossoms and tropical plants.</p>
+            </div>
+            <div class="amenity-card">
+                <div class="icon">🅿️</div>
+                <h3>Free Parking</h3>
+                <p>Spacious and secure free parking area available for all our guests throughout their stay.</p>
+            </div>
+        </div>
+    </section>
 
-  <section id="contact" class="section contact">
-    <h2>Contact Us</h2>
-    <div class="contact-grid">
-      <div class="contact-info">
-        <p>📞 +63 9282892525</p>
-        <p>✉️ https://www.facebook.com/profile.php?id=61585715770637</p>
-        <p>📍 484 1, Larion Bajo, Tuguegarao City, 3500 Cagayan</p>
-      </div>
-      <div id="map" style="height: 300px; width: 100%;"></div>
-    </div>
-  </section>
-
-  <footer>
-    <p>© 2026 Cherry Blossom's Resort. All rights reserved.</p>
-  </footer>
-
-  <!-- Lightbox -->
-  <div id="lightbox" class="lightbox">
-    <span class="close" onclick="closeLightbox()">&times;</span>
-    <img id="lightbox-img" src="" alt="Enlarged Image">
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+    <!-- ROOMS -->
+    <section class="rooms" id="rooms">
+        <h2 class="section-title">Our Cozy Rooms</h2>
+        <p class="section-subtitle">7 ROOMS DESIGNED FOR YOUR COMFORT</p>
+        <div class="rooms-grid">
+            <div class="room-card">
+                <div class="room-img">🛏️</div>
+                <div class="room-info">
+                    <h3>Blossom Standard Room</h3>
+                    <p>A cozy room with a queen bed, air conditioning, and a lovely garden view.</p>
+                    <div class="price">₱1,100 <span>/ night</span></div>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-img">🌸</div>
+                <div class="room-info">
+                    <h3>Cherry Deluxe Room</h3>
+                    <p>Spacious deluxe room with king bed, mini-fridge, and a private balcony view.</p>
+                    <div class="price">₱2,500 <span>/ night</span></div>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-img">
